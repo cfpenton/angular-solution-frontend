@@ -1,1 +1,19 @@
 /* You can add global styles to this file, and also import other style files */
+nav{
+    max-width: 62.5rem;
+    margin: 0 auto;
+}
+.contain-nav {
+    width: 100%;
+    background: #2a5d84;
+}
+
+.contain-body {
+    max-width: 62.5rem;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+.navbar-collapse{
+    flex-grow: inherit !important;
+}
