@@ -1,4 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
+$primary: #2a5d84;
+
+@import "bootstrap";
+
 nav{
     max-width: 62.5rem;
     margin: 0 auto;
@@ -16,4 +20,23 @@ nav{
 
 .navbar-collapse{
     flex-grow: inherit !important;
+}
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) {  }
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) {  }
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) {  }
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) {  }
+
+.ml-3{
+    margin-left: 10px;
+}
+
+nav,div a{
+    cursor: pointer;
 }

@@ -8,37 +8,142 @@
                 aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-    <div class="collapse navbar-collapse" id="navbarText">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-                <a class="nav-link active" aria-current="page">Agence</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link">Projetos</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link">Administrativo</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link">Comercial</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link">Financeiro</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link">Usuário</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link">Sair</a>
-            </li>
-        </ul>
-    </div>
-</div>  
+            <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page">Agence</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link">Projetos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link">Administrativo</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link">Comercial</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link">Financeiro</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link">Usuário</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link">Sair</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </nav>
 </div>
 <div class="contain-body">
-    <div class="btn-group-toggle" data-toggle="buttons">
-        <button type="button" class="btn btn-primary">Por Consultor</button>
-        <button type="button" class="btn btn-outline-primary">Por Cliente</button>
-      </div>
+
+    <ul class="nav nav-pills">
+        <li class="nav-item">
+            <a class="nav-link" [class.active]="current==1" (click)="setCurrent(1)">Por Consultor</a>
+        </li>
+        <li class="nav-item ml-3">
+            <a class="nav-link" [class.active]="current==2" (click)="setCurrent(2)">Por Cliente</a>
+        </li>
+    </ul>
+
+    <ul class="nav">
+        <li class="nav-link">
+            <strong>Período</strong>
+        </li>
+        <li class="nav-link">
+            <select name="select5">
+                <option>Jan
+                </option>
+                <option>Fev
+                </option>
+                <option>Mar
+                </option>
+                <option>Abr
+                </option>
+                <option>Mai
+                </option>
+                <option>Jun
+                </option>
+                <option>Jul
+                </option>
+                <option>Ago
+                </option>
+                <option selected="">Set
+                </option>
+                <option>Out
+                </option>
+                <option>Nov
+                </option>
+                <option>Dez
+                </option>
+            </select>
+            <select name="select">
+                <option>2003
+                </option>
+                <option>2004
+                </option>
+                <option>2005</option>
+                <option>2006</option>
+                <option selected="">2007</option>
+            </select>
+           <strong> a </strong>
+            <select name="select3">
+                <option>Jan
+                </option>
+                <option>Fev
+                </option>
+                <option>Mar
+                </option>
+                <option>Abr
+                </option>
+                <option>Mai
+                </option>
+                <option>Jun
+                </option>
+                <option>Jul
+                </option>
+                <option>Ago
+                </option>
+                <option selected="">Set
+                </option>
+                <option>Out
+                </option>
+                <option>Nov
+                </option>
+                <option>Dez
+                </option>
+            </select>
+            <select name="select4">
+                <option>2003
+                </option>
+                <option>2004
+                </option>
+                <option>2005</option>
+                <option>2006</option>
+                <option selected="">2007</option>
+            </select>
+        </li>
+    </ul>
+    <ul class="nav">
+        <li class="nav-link">
+            <strong>Consultores</strong>
+        </li>
+        <li style="width: 100%;">
+            <dual-list [source]="source" [(destination)]="target" height="200px"></dual-list>
+        </li>
+        </ul>
+        <br>
+        <ul class="nav nav-pills">
+            <li class="nav-item">
+                <a class="nav-link" [class.active]="current1==1" (click)="setCurrent1(1)">Relatório</a>
+            </li>
+            <li class="nav-item ml-3">
+                <a class="nav-link" [class.active]="current1==2" (click)="setCurrent1(2)">Gráfico</a>
+            </li>
+            <li class="nav-item ml-3">
+                <a class="nav-link" [class.active]="current1==3" (click)="setCurrent1(3)">Pizza</a>
+            </li>
+        </ul>
+</div>
 <router-outlet></router-outlet>
