@@ -10,7 +10,11 @@ export class CommonApiService {
   baseUrlEndpoint = environment.baseServiceUrl;
   constructor(private httpClient: HttpClient) { }
 
-  getAllConsultores(): Observable<any> {
-    return this.httpClient.get(this.baseUrlEndpoint + "consultoresAll");
+  getConsultores(): Observable<any> {
+    return this.httpClient.get(this.baseUrlEndpoint + "consultores");
+  }
+
+  getRelatorioDoConsultor(consultor: string, monthStart: string, yearStart: string, monthEnd: string, yearEnd: string): Observable<any> {
+    return this.httpClient.get(this.baseUrlEndpoint + "relatorio/" + consultor +"/"+ monthStart +"/"+ yearStart +"/"+ monthEnd +"/"+ yearEnd);
   }
 }

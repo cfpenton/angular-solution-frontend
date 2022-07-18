@@ -1,0 +1,31 @@
+<div *ngFor="let cons of target; let i = index">
+    <table class="table">
+        <tbody>
+            <tr class="table-primary">
+                <th colspan="5">{{cons}}</th>
+            </tr>
+            <tr>
+                <th>Período</th>
+                <th>Receita Líquida</th>
+                <th>Custo Fixo</th>
+                <th>Comissão</th>
+                <th>Lucro</th>
+            </tr>
+            <tr *ngFor="let repM of reportData[i]; let y= index">
+                <td> {{months[y].name}} </td>
+                <td>{{repM.RECEITA_LIQUIDA | currency:"BRL":"symbol"}}</td>
+                <td>{{repM.CUSTO_FIJO | currency:"BRL":"symbol"}}</td>
+                <td>{{repM.COMISSAO | currency:"BRL":"symbol"}}</td>
+                <td>{{repM.LUCRO | currency:"BRL":"symbol"}}</td>
+            </tr>
+            <tr>
+                <th>SALDO</th>
+                <th>{{4 | currency:"BRL":"symbol"}}</th>
+                <th>{{4 | currency:"BRL":"symbol"}}</th>
+                <th>{{4 | currency:"BRL":"symbol"}}</th>
+                <th>{{4 | currency:"BRL":"symbol"}}</th>
+            </tr>
+        </tbody>
+    </table>
+    <br>
+</div>

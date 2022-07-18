@@ -38,112 +38,68 @@
 </div>
 <div class="contain-body">
 
-    <ul class="nav nav-pills">
-        <li class="nav-item">
-            <a class="nav-link" [class.active]="current==1" (click)="setCurrent(1)">Por Consultor</a>
-        </li>
-        <li class="nav-item ml-3">
-            <a class="nav-link" [class.active]="current==2" (click)="setCurrent(2)">Por Cliente</a>
-        </li>
-    </ul>
-
-    <ul class="nav">
-        <li class="nav-link">
-            <strong>Período</strong>
-        </li>
-        <li class="nav-link">
-            <select name="select5">
-                <option>Jan
-                </option>
-                <option>Fev
-                </option>
-                <option>Mar
-                </option>
-                <option>Abr
-                </option>
-                <option>Mai
-                </option>
-                <option>Jun
-                </option>
-                <option>Jul
-                </option>
-                <option>Ago
-                </option>
-                <option selected="">Set
-                </option>
-                <option>Out
-                </option>
-                <option>Nov
-                </option>
-                <option>Dez
-                </option>
-            </select>
-            <select name="select">
-                <option>2003
-                </option>
-                <option>2004
-                </option>
-                <option>2005</option>
-                <option>2006</option>
-                <option selected="">2007</option>
-            </select>
-           <strong> a </strong>
-            <select name="select3">
-                <option>Jan
-                </option>
-                <option>Fev
-                </option>
-                <option>Mar
-                </option>
-                <option>Abr
-                </option>
-                <option>Mai
-                </option>
-                <option>Jun
-                </option>
-                <option>Jul
-                </option>
-                <option>Ago
-                </option>
-                <option selected="">Set
-                </option>
-                <option>Out
-                </option>
-                <option>Nov
-                </option>
-                <option>Dez
-                </option>
-            </select>
-            <select name="select4">
-                <option>2003
-                </option>
-                <option>2004
-                </option>
-                <option>2005</option>
-                <option>2006</option>
-                <option selected="">2007</option>
-            </select>
-        </li>
-    </ul>
-    <ul class="nav">
-        <li class="nav-link">
-            <strong>Consultores</strong>
-        </li>
-        <li style="width: 100%;">
-            <dual-list [source]="source" [(destination)]="target" height="200px"></dual-list>
-        </li>
-        </ul>
-        <br>
+    <form id="form" #userForm="ngForm">
         <ul class="nav nav-pills">
             <li class="nav-item">
-                <a class="nav-link" [class.active]="current1==1" (click)="setCurrent1(1)">Relatório</a>
+                <a class="nav-link" [class.active]="current==1" (click)="setCurrent(1)">Por Consultor</a>
             </li>
             <li class="nav-item ml-3">
-                <a class="nav-link" [class.active]="current1==2" (click)="setCurrent1(2)">Gráfico</a>
-            </li>
-            <li class="nav-item ml-3">
-                <a class="nav-link" [class.active]="current1==3" (click)="setCurrent1(3)">Pizza</a>
+                <a class="nav-link" [class.active]="current==2" (click)="setCurrent(2)">Por Cliente</a>
             </li>
         </ul>
+
+        <ul class="nav justify-content-center">
+            <li class="nav-link">
+                <strong>{{userType}}</strong>
+            </li>
+            <li style="width: 100%;">
+                <dual-list [source]="source" [(destination)]="target" height="200px"></dual-list>
+            </li>
+        </ul>
+        <br>
+        <div class="row row-cols-auto mb-2 d-flex align-items-center">
+            <div class="col">
+                <strong>Período</strong>
+            </div>
+            <div class="col d-flex">
+                <select class="form-select form-control" name="select1" ng-init="selected1 = selected1 || '01'"  [(ngModel)]="selected1">
+                    <option *ngFor="let item of months; let i = index" [ngValue]="item.val">{{item.name}}
+                    </option>
+                </select>
+                <select class="form-select ml-3 form-control" name="select2" style="min-width: 88px;" [(ngModel)]="selected2">
+                    <option *ngFor="let item of years; let i = index" [ngValue]="item">{{item}}
+                    </option>
+                </select>
+            </div>
+            <div class="col">
+                <strong> a </strong>
+            </div>
+
+            <div class="col d-flex">
+                <select class="form-select form-control" name="select3" [(ngModel)]="selected3">
+                    <option *ngFor="let item of months; let i = index" [ngValue]="item.val">{{item.name}}
+                    </option>
+                </select>
+                <select class="form-select ml-3 form-control" name="select4" style="min-width: 88px;" [(ngModel)]="selected4">
+                    <option *ngFor="let item of years; let i = index" [ngValue]="item">{{item}}
+                    </option>
+                </select>
+            </div>
+        </div>
+    </form>
+    <ul class="nav nav-pills">
+        <li class="nav-item">
+            <a class="nav-link" [class.active]="current1==1" (click)="setCurrent1(1);getReport()">Relatório</a>
+        </li>
+        <li class="nav-item ml-3">
+            <a class="nav-link" [class.active]="current1==2" (click)="setCurrent1(2)">Gráfico</a>
+        </li>
+        <li class="nav-item ml-3">
+            <a class="nav-link" [class.active]="current1==3" (click)="setCurrent1(3)">Pizza</a>
+        </li>
+    </ul>
+    <br>
+<div *ngIf="current1==1">
+    <app-relatorio [target]="target" [reportData]="reportData" [months]="months"></app-relatorio>
 </div>
-<router-outlet></router-outlet>
+</div>
