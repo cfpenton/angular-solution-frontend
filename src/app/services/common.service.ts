@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class CommonApiService {
+export class CommonService {
   baseUrlEndpoint = environment.baseServiceUrl;
   constructor(private httpClient: HttpClient) { }
 

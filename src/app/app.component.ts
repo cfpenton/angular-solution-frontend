@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 /* import { FormBuilder, FormGroup, Validators } from '@angular/forms'; */
-import { CommonApiService } from './services/common.api.service';
+import { CommonService } from './services/common.service';
 
 @Component({
   selector: 'app-root',
@@ -41,7 +41,7 @@ export class AppComponent {
   selected3: any = this.months[0].val;
   selected4: any = this.years[this.years.length - 1];
   constructor(
-    private commonApiService: CommonApiService,
+    private commonService: CommonService,
     public router: Router,
     /*     private fb: FormBuilder, */
   ) { }
@@ -68,7 +68,7 @@ export class AppComponent {
   };
 
   getConsultores() {
-    this.commonApiService.getConsultores().subscribe(result => {
+    this.commonService.getConsultores().subscribe(result => {
       this.consultoresData = result;
       for (var i in result)
         this.source.push(result[i].no_usuario);
@@ -90,7 +90,7 @@ export class AppComponent {
     this.reportSaldo=[];
     for (let index = 0; index < this.target.length; index++) {
       this.currentConsultor = this.consultoresData.filter((x:any) => x.no_usuario == this.target[index]);
-      this.commonApiService.getRelatorioDoConsultor(this.currentConsultor[0].co_usuario, this.selected1, this.selected2, this.selected3,
+      this.commonService.getRelatorioDoConsultor(this.currentConsultor[0].co_usuario, this.selected1, this.selected2, this.selected3,
         this.selected4).subscribe(result => {
 
           this.reportSalCon = { RECEITA_LIQUIDA: 0, CUSTO_FIJO: 0, COMISSAO: 0, LUCRO: 0 };
