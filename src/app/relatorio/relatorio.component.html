@@ -12,7 +12,7 @@
                 <th>Lucro</th>
             </tr>
             <tr *ngFor="let repM of reportData[i]; let y= index">
-                <td> {{months[y].name}} </td>
+                <td> {{repM.MONTH}} </td>
                 <td>{{repM.RECEITA_LIQUIDA | currency:"BRL":"symbol"}}</td>
                 <td>{{repM.CUSTO_FIJO | currency:"BRL":"symbol"}}</td>
                 <td>{{repM.COMISSAO | currency:"BRL":"symbol"}}</td>

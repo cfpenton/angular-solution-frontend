@@ -41,10 +41,10 @@
     <form id="form" #userForm="ngForm">
         <ul class="nav nav-pills">
             <li class="nav-item">
-                <a class="nav-link" [class.active]="current==1" (click)="setCurrent(1)">Por Consultor</a>
+                <a class="btn btn-outline-primary" [class.active]="current==1" (click)="setCurrent(1)">Por Consultor</a>
             </li>
             <li class="nav-item ml-3">
-                <a class="nav-link" [class.active]="current==2" (click)="setCurrent(2)">Por Cliente</a>
+                <a class="btn btn-outline-primary" [class.active]="current==2" (click)="setCurrent(2)">Por Cliente</a>
             </li>
         </ul>
 
@@ -57,7 +57,7 @@
             </li>
         </ul>
         <br>
-        <div class="row row-cols-auto mb-2 d-flex align-items-center">
+        <div class="row row-cols-auto mb-2 d-flex align-items-center text-primary">
             <div class="col">
                 <strong>Período</strong>
             </div>
@@ -89,17 +89,17 @@
     </form>
     <ul class="nav nav-pills">
         <li class="nav-item">
-            <a class="nav-link" [class.active]="current1==1" (click)="setCurrent1(1);getReport()">Relatório</a>
+            <a class="btn btn-outline-primary" [class.active]="current1==1" (click)="getReport()">Relatório</a>
         </li>
         <li class="nav-item ml-3">
-            <a class="nav-link" [class.active]="current1==2" (click)="setCurrent1(2)">Gráfico</a>
+            <a class="btn btn-outline-primary" [class.active]="current1==2" (click)="getGrafico()">Gráfico</a>
         </li>
         <li class="nav-item ml-3">
-            <a class="nav-link" [class.active]="current1==3" (click)="setCurrent1(3)">Pizza</a>
+            <a class="btn btn-outline-primary" [class.active]="current1==3" (click)="getPizza()">Pizza</a>
         </li>
     </ul>
     <br>
 <div *ngIf="current1==1">
-    <app-relatorio [target]="target" [reportData]="reportData" [months]="months" [reportSaldo]="reportSaldo"></app-relatorio>
+    <app-relatorio [target]="target" [reportData]="reportData" [reportSaldo]="reportSaldo"></app-relatorio>
 </div>
 </div>
