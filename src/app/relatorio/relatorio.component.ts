@@ -10,6 +10,7 @@ export class RelatorioComponent implements OnInit {
   @Input() target:any;
   @Input() reportData:any;
   @Input() months:any;
+  @Input() reportSaldo:any;
   constructor() { }
 
   ngOnInit(): void {

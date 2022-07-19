@@ -16,21 +16,23 @@ export class AppComponent {
   target = [];
   consultoresData: any;
   reportData: any[][] = [];
+  reportSaldo: any[] = [];
+  reportSalCon: any;
   userType = 'Consultores';
   /*   dataForm: FormGroup; */
   months: any[] = [
-    { name: 'Jan', val: '01' , id: 1},
-    { name: 'Fev', val: '02' , id: 2},
-    { name: 'Mar', val: '03' , id: 3},
-    { name: 'Abr', val: '04' , id: 4},
-    { name: 'Mai', val: '05' , id: 5},
-    { name: 'Jun', val: '06' , id: 6},
-    { name: 'Jul', val: '07' , id: 7},
-    { name: 'Ago', val: '08' , id: 8},
-    { name: 'Set', val: '09' , id: 9},
-    { name: 'Out', val: '10' , id: 10},
-    { name: 'Nov', val: '11' , id: 11},
-    { name: 'Dez', val: '12' , id: 12},
+    { name: 'Jan', val: '01', id: 1 },
+    { name: 'Fev', val: '02', id: 2 },
+    { name: 'Mar', val: '03', id: 3 },
+    { name: 'Abr', val: '04', id: 4 },
+    { name: 'Mai', val: '05', id: 5 },
+    { name: 'Jun', val: '06', id: 6 },
+    { name: 'Jul', val: '07', id: 7 },
+    { name: 'Ago', val: '08', id: 8 },
+    { name: 'Set', val: '09', id: 9 },
+    { name: 'Out', val: '10', id: 10 },
+    { name: 'Nov', val: '11', id: 11 },
+    { name: 'Dez', val: '12', id: 12 },
   ];
   years = ['2003', '2004', '2005', '2006', '2007'];
   selected1: any = this.months[0].val;
@@ -90,13 +92,25 @@ export class AppComponent {
   };
   currentConsultor: any;
 
+
   getReport() {
     for (let index = 0; index < this.target.length; index++) {
       this.currentConsultor = this.consultoresData.find((element: any) => element.no_usuario = this.target[index]);
+      console.log(this.currentConsultor);
       this.commonApiService.getRelatorioDoConsultor(this.currentConsultor.co_usuario, this.selected1, this.selected2, this.selected3,
         this.selected4).subscribe(result => {
+
+          this.reportSalCon = { RECEITA_LIQUIDA: 0, CUSTO_FIJO: 0, COMISSAO: 0, LUCRO: 0 };
+          for (let y = 0; y < result.length; y++) {
+            this.reportSalCon.RECEITA_LIQUIDA += result[y].RECEITA_LIQUIDA;
+            this.reportSalCon.CUSTO_FIJO += result[y].CUSTO_FIJO;
+            this.reportSalCon.COMISSAO += result[y].COMISSAO;
+            this.reportSalCon.LUCRO += result[y].LUCRO;
+          }
+
+          this.reportSaldo.push(this.reportSalCon);
           this.reportData.push(result);
-          console.log('Relatorio obtenido', this.reportData );
+          console.log('Relatorio obtenido', this.reportSaldo);
         }, err => {
           console.log('Erro ao obter os dados Relatorio(conexion fail frontend-backend)', err);
         });

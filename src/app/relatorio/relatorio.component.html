@@ -18,12 +18,12 @@
                 <td>{{repM.COMISSAO | currency:"BRL":"symbol"}}</td>
                 <td>{{repM.LUCRO | currency:"BRL":"symbol"}}</td>
             </tr>
-            <tr>
+            <tr *ngIf="reportSaldo[i]!= undefined">
                 <th>SALDO</th>
-                <th>{{4 | currency:"BRL":"symbol"}}</th>
-                <th>{{4 | currency:"BRL":"symbol"}}</th>
-                <th>{{4 | currency:"BRL":"symbol"}}</th>
-                <th>{{4 | currency:"BRL":"symbol"}}</th>
+                <th >{{reportSaldo[i].RECEITA_LIQUIDA | currency:"BRL":"symbol"}}</th>
+                <th >{{reportSaldo[i].CUSTO_FIJO | currency:"BRL":"symbol"}}</th>
+                <th >{{reportSaldo[i].COMISSAO | currency:"BRL":"symbol"}}</th>
+                <th >{{reportSaldo[i].LUCRO | currency:"BRL":"symbol"}}</th>
             </tr>
         </tbody>
     </table>
