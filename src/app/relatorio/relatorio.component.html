@@ -1,10 +1,10 @@
 <div *ngFor="let cons of target; let i = index">
     <table class="table">
         <tbody>
-            <tr class="table-primary">
+            <tr class="table-primary text-primary">
                 <th colspan="5">{{cons}}</th>
             </tr>
-            <tr>
+            <tr class="text-primary">
                 <th>Período</th>
                 <th>Receita Líquida</th>
                 <th>Custo Fixo</th>
@@ -18,7 +18,7 @@
                 <td>{{repM.COMISSAO | currency:"BRL":"symbol"}}</td>
                 <td>{{repM.LUCRO | currency:"BRL":"symbol"}}</td>
             </tr>
-            <tr *ngIf="reportSaldo[i]!= undefined">
+            <tr *ngIf="reportSaldo[i]!= undefined" class="text-primary">
                 <th>SALDO</th>
                 <th >{{reportSaldo[i].RECEITA_LIQUIDA | currency:"BRL":"symbol"}}</th>
                 <th >{{reportSaldo[i].CUSTO_FIJO | currency:"BRL":"symbol"}}</th>
