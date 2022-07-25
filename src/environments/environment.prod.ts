@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  baseServiceUrl: "/"
+  baseServiceUrl: "https://agence-brazil.herokuapp.com/"
 };
