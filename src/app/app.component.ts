@@ -17,8 +17,6 @@ export class AppComponent {
   consultoresData: any;
   currentConsultor: any;
   reportData: any[][] = [];
-  reportSaldo: any[] = [];
-  reportSalCon: any;
   userType = 'Consultores';
   /*   dataForm: FormGroup; */
   months: any[] = [
@@ -74,40 +72,29 @@ export class AppComponent {
         this.source.push(result[i].no_usuario);
 
       /* console.log("consultoresData", this.consultoresData); */
-      console.log('Consultores obtenidos'/* , this.source */);
+      /* console.log('Consultores obtenidos', this.source); */
 
     }, err => {
       console.log('Erro ao obter os dados Consultores(conexion fail frontend-backend)', err);
     });
   };
 
-
-
   getReport() {
     this.current1 = 1;
     this.reportData =[];
     this.currentConsultor=[];
-    this.reportSaldo=[];
     for (let index = 0; index < this.target.length; index++) {
-      this.currentConsultor = this.consultoresData.filter((x:any) => x.no_usuario == this.target[index]);
-      this.commonService.getRelatorioDoConsultor(this.currentConsultor[0].co_usuario, this.selected1, this.selected2, this.selected3,
+      this.currentConsultor = this.consultoresData.find((x:any) => x.no_usuario == this.target[index]);
+      this.commonService.getRelatorioDoConsultor(this.currentConsultor.co_usuario, this.selected1, this.selected2, this.selected3,
         this.selected4).subscribe(result => {
 
-          this.reportSalCon = { RECEITA_LIQUIDA: 0, CUSTO_FIJO: 0, COMISSAO: 0, LUCRO: 0 };
-          for (let y = 0; y < result.length; y++) {
-            this.reportSalCon.RECEITA_LIQUIDA += result[y].RECEITA_LIQUIDA;
-            this.reportSalCon.CUSTO_FIJO += result[y].CUSTO_FIJO;
-            this.reportSalCon.COMISSAO += result[y].COMISSAO;
-            this.reportSalCon.LUCRO += result[y].LUCRO;
-          }
-
-          this.reportSaldo.push(this.reportSalCon);
           this.reportData.push(result);
-          console.log('Relatorio obtenido'/* , this.reportSaldo */);
+          /* console.log('Relatorio obtenido'); */
         }, err => {
           console.log('Erro ao obter os dados Relatorio(conexion fail frontend-backend)', err);
         });
     };
+   /*  console.log(this.reportData) */
   };
 
   getGrafico(){

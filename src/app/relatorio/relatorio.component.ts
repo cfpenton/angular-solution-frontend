@@ -7,9 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class RelatorioComponent implements OnInit {
 
-  @Input() target:any;
   @Input() reportData:any;
-  @Input() reportSaldo:any;
   constructor() { }
 
   ngOnInit(): void {

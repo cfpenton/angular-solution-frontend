@@ -1,8 +1,8 @@
-<div *ngFor="let cons of target; let i = index">
+<div *ngFor="let consultores of reportData">
     <table class="table">
         <tbody>
             <tr class="table-primary text-primary">
-                <th colspan="5">{{cons}}</th>
+                <th colspan="5">{{consultores.no_consultor}}</th>
             </tr>
             <tr class="text-primary">
                 <th>Período</th>
@@ -11,19 +11,23 @@
                 <th>Comissão</th>
                 <th>Lucro</th>
             </tr>
-            <tr *ngFor="let repM of reportData[i]; let y= index">
+            
+            <tr *ngFor="let repM of consultores.rowArray">
+                <ng-container *ngIf="repM.RECEITA_LIQUIDA!=null">
                 <td> {{repM.MONTH}} </td>
                 <td>{{repM.RECEITA_LIQUIDA | currency:"BRL":"symbol"}}</td>
                 <td>{{repM.CUSTO_FIJO | currency:"BRL":"symbol"}}</td>
                 <td>{{repM.COMISSAO | currency:"BRL":"symbol"}}</td>
-                <td>{{repM.LUCRO | currency:"BRL":"symbol"}}</td>
+                <td [ngStyle]="{'color':repM.LUCRO > 0 ? 'green' : 'red' }" >{{repM.LUCRO | currency:"BRL":"symbol"}}</td>
+            </ng-container>
             </tr>
-            <tr *ngIf="reportSaldo[i]!= undefined" class="text-primary">
+           <!--  *ngIf="reportSaldo[i]!= undefined" -->
+            <tr class="text-primary">
                 <th>SALDO</th>
-                <th >{{reportSaldo[i].RECEITA_LIQUIDA | currency:"BRL":"symbol"}}</th>
-                <th >{{reportSaldo[i].CUSTO_FIJO | currency:"BRL":"symbol"}}</th>
-                <th >{{reportSaldo[i].COMISSAO | currency:"BRL":"symbol"}}</th>
-                <th >{{reportSaldo[i].LUCRO | currency:"BRL":"symbol"}}</th>
+                <th >{{consultores.saldo.RECEITA_LIQUIDA | currency:"BRL":"symbol"}}</th>
+                <th >{{consultores.saldo.CUSTO_FIJO | currency:"BRL":"symbol"}}</th>
+                <th >{{consultores.saldo.COMISSAO | currency:"BRL":"symbol"}}</th>
+                <th [ngStyle]="{'color':consultores.saldo.LUCRO > 0 ? 'green' : 'red' }">{{consultores.saldo.LUCRO | currency:"BRL":"symbol"}}</th>
             </tr>
         </tbody>
     </table>
