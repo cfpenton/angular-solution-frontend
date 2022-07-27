@@ -111,5 +111,8 @@
       }
     }
   },
-  "defaultProject": "angular-solution-frontend"
+  "defaultProject": "angular-solution-frontend",
+  "cli": {
+    "analytics": false
+  }
 }

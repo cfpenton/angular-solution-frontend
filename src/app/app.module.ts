@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { RelatorioComponent } from './relatorio/relatorio.component';
 import { GraficoComponent } from './grafico/grafico.component';
 import { PizzaComponent } from './pizza/pizza.component';
+import { NgChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { PizzaComponent } from './pizza/pizza.component';
     BrowserModule,
     AppRoutingModule,
     AngularDualListBoxModule,
+    NgChartsModule,
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule
