@@ -1,14 +1,57 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-/* import { FormBuilder, FormGroup, Validators } from '@angular/forms'; */
+import { Component, ViewChild } from '@angular/core';
 import { CommonService } from './services/common.service';
+import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
+import { BaseChartDirective } from 'ng2-charts';
 
+import DataLabelsPlugin from 'chartjs-plugin-datalabels';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+  
+  @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
+
+  public barChartOptions: ChartConfiguration['options'] = {
+    responsive: true,
+    maintainAspectRatio: false,
+    // We use these empty structures as placeholders for dynamic theming.
+    scales: {
+      x: {},
+      y: {
+        min: 0
+      }
+    },
+    plugins: {
+      legend: {
+        display: true,
+        position: 'bottom',
+      },
+      datalabels: {
+        anchor: 'end',
+        align: 'end'
+      }
+    }
+  };
+  public barChartType: ChartType = 'bar';
+  public pieChartType: ChartType = 'pie';
+  public barChartPlugins = [
+    DataLabelsPlugin
+  ];
+
+  public pieChartData: ChartData<'pie', number[], string | string[]> = {
+    labels:  [],
+    datasets: [{
+      data: []
+    } ]
+  };
+
+  public barChartData: ChartData<'bar'> = {
+    labels: [],
+    datasets: []
+  };
+  arrayRL:any=[]
   logo: string = '../assets/images/agence-logo.png';
   current: any = 1;
   current1: any;
@@ -16,9 +59,8 @@ export class AppComponent {
   target = [];
   consultoresData: any;
   currentConsultor: any;
-  reportData: any[][] = [];
+  reportData: any = [];
   userType = 'Consultores';
-  /*   dataForm: FormGroup; */
   months: any[] = [
     { name: 'Jan', val: '01', id: 1 },
     { name: 'Fev', val: '02', id: 2 },
@@ -40,28 +82,24 @@ export class AppComponent {
   selected4: any = this.years[this.years.length - 1];
   constructor(
     private commonService: CommonService,
-    public router: Router,
-    /*     private fb: FormBuilder, */
   ) { }
 
   ngOnInit() {
     this.getConsultores();
-    /*     this.dataForm = this.fb.group({
-          monthStart: [this.config.maxAttempts, Validators.required],
-          yearStart: [this.config.maxAttempts, Validators.required],
-          monthEnd: [this.config.maxAttempts, Validators.required],
-          yearEnd: [this.config.maxAttempts, Validators.required],
-        }); */
   }
 
   setCurrent(value: any) {
     if (value == 1) {
       this.current = 1;
       this.userType = 'Consultores';
+      this.getConsultores();
     }
     if (value == 2) {
       this.current = 2;
       this.userType = 'Clientes';
+      this.source = [];
+      this.target = [];
+      this.reportData=[];
     }
   };
 
@@ -71,17 +109,17 @@ export class AppComponent {
       for (var i in result)
         this.source.push(result[i].no_usuario);
 
-      /* console.log("consultoresData", this.consultoresData); */
-      /* console.log('Consultores obtenidos', this.source); */
-
     }, err => {
       console.log('Erro ao obter os dados Consultores(conexion fail frontend-backend)', err);
     });
   };
 
-  getReport() {
-    this.current1 = 1;
+  getReportData(){
     this.reportData =[];
+    this.barChartData.datasets = [];
+    this.pieChartData.labels =[];
+    this.pieChartData.datasets = [];
+    this.arrayRL =[];
     this.currentConsultor=[];
     for (let index = 0; index < this.target.length; index++) {
       this.currentConsultor = this.consultoresData.find((x:any) => x.no_usuario == this.target[index]);
@@ -89,19 +127,47 @@ export class AppComponent {
         this.selected4).subscribe(result => {
 
           this.reportData.push(result);
-          /* console.log('Relatorio obtenido'); */
+          this.barChartData.labels = result.dateArray;
+          this.barChartData.datasets.push({data:result.rlArray,label:result.no_consultor});
+          this.pieChartData.labels?.push(result.no_consultor);
+          this.arrayRL.push(result.saldo.RECEITA_LIQUIDA);
+          this.chart?.update();
         }, err => {
           console.log('Erro ao obter os dados Relatorio(conexion fail frontend-backend)', err);
         });
     };
-   /*  console.log(this.reportData) */
+    this.pieChartData.datasets.push({data:this.arrayRL});
+    this.chart?.update();
+  };
+
+  getReport() {
+    if (this.current1 != 1) {
+    this.current1 = 1;
+    this.getReportData();
+    }
   };
 
   getGrafico(){
+    if (this.current1 != 2) {
     this.current1 = 2;
+    this.getReportData();
+    this.chart?.update();
+    }
   };
 
   getPizza(){
-    this.current1 = 3;
+    if (this.current1 != 3) {
+      this.current1 = 3;
+      this.getReportData();
+      this.chart?.update(); 
+    }
   };
+
+  public chartClicked({ event, active }: { event?: ChartEvent, active?: {}[] }): void {
+    /* console.log(event, active); */
+  }
+
+  public chartHovered({ event, active }: { event?: ChartEvent, active?: {}[] }): void {
+    /* console.log(event, active); */
+  }
 }

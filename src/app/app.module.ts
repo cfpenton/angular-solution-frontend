@@ -7,15 +7,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { RelatorioComponent } from './components/relatorio/relatorio.component';
 import { NgChartsModule } from 'ng2-charts';
-import { BarChartComponent } from './components/bar-chart/bar-chart.component';
-import { PieChartComponent } from './components/pie-chart/pie-chart.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    RelatorioComponent,
-    BarChartComponent,
-    PieChartComponent
+    RelatorioComponent
   ],
   imports: [
     BrowserModule,

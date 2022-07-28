@@ -1,16 +1,12 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-relatorio',
   templateUrl: './relatorio.component.html',
   styleUrls: ['./relatorio.component.scss']
 })
-export class RelatorioComponent implements OnInit {
+export class RelatorioComponent {
 
   @Input() reportData:any;
-  constructor() { }
-
-  ngOnInit(): void {
-  }
 
 }

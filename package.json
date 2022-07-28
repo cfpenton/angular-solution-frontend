@@ -22,6 +22,7 @@
     "angular-dual-listbox": "^6.0.0",
     "bootstrap": "^5.2.0-beta1",
     "chart.js": "^3.8.2",
+    "chartjs-plugin-datalabels": "^2.0.0",
     "jquery": "^3.6.0",
     "ng2-charts": "^4.0.0",
     "rxjs": "~7.5.0",

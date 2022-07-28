@@ -57,11 +57,11 @@
             </li>
         </ul>
         <br>
-        <div class="row row-cols-auto mb-2 d-flex align-items-center text-primary">
-            <div class="col">
+        <div class="row row-cols-auto d-flex align-items-center text-primary">
+            <div class="col m-2">
                 <strong>Período</strong>
             </div>
-            <div class="col d-flex">
+            <div class="col d-flex m-2">
                 <select class="form-select form-control" name="select1" ng-init="selected1 = selected1 || '01'"  [(ngModel)]="selected1">
                     <option *ngFor="let item of months; let i = index" [ngValue]="item.val">{{item.name}}
                     </option>
@@ -71,11 +71,11 @@
                     </option>
                 </select>
             </div>
-            <div class="col">
+            <div class="col m-2">
                 <strong> a </strong>
             </div>
 
-            <div class="col d-flex">
+            <div class="col d-flex m-2">
                 <select class="form-select form-control" name="select3" [(ngModel)]="selected3">
                     <option *ngFor="let item of months; let i = index" [ngValue]="item.val">{{item.name}}
                     </option>
@@ -88,24 +88,47 @@
         </div>
     </form>
     <ul class="nav nav-pills">
-        <li class="nav-item">
+        <li class="nav-item m-2">
             <a class="btn btn-outline-primary" [class.active]="current1==1" (click)="getReport()">Relatório</a>
         </li>
-        <li class="nav-item ml-3">
+        <li class="nav-item m-2">
             <a class="btn btn-outline-primary" [class.active]="current1==2" (click)="getGrafico()">Gráfico</a>
         </li>
-        <li class="nav-item ml-3">
+        <li class="nav-item m-2">
             <a class="btn btn-outline-primary" [class.active]="current1==3" (click)="getPizza()">Pizza</a>
+        </li>
+        <li class="m-2">
+            <a class="btn btn-outline-success" (click)="getReportData()">Atualizar</a>
         </li>
     </ul>
     <br>
-<div *ngIf="current1==1">
+<div *ngIf="current1==1  && target.length >0 && reportData.length >0">
     <app-relatorio [reportData]="reportData"></app-relatorio>
 </div>
-<div *ngIf="current1==2">
-    <app-bar-chart></app-bar-chart>
+<div *ngIf="current1==2 && target.length >0 && reportData.length >0">
+    <div>
+          <div style="display: block;">
+            <canvas baseChart height="500"
+              [data]="barChartData"
+              [options]="barChartOptions"
+              [plugins]="barChartPlugins"
+              [type]="barChartType"
+              (chartHover)="chartHovered($event)"
+              (chartClick)="chartClicked($event)">
+            </canvas>
+          </div>
+      </div>
 </div>
-<div *ngIf="current1==3">
-    <app-pie-chart></app-pie-chart>
+<div *ngIf="current1==3  && target.length >0 && reportData.length >0">
+        <div>
+          <div class="chart">
+            <canvas baseChart height="500"
+                    [data]="pieChartData"
+                    [options]="barChartOptions"
+                    [plugins]="barChartPlugins"
+                    [type]="pieChartType">
+            </canvas>
+          </div>
+        </div>
 </div>
 </div>

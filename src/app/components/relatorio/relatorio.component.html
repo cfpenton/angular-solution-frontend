@@ -12,9 +12,9 @@
                 <th>Lucro</th>
             </tr>
             
-            <tr *ngFor="let repM of consultores.rowArray">
+            <tr *ngFor="let repM of consultores.rowArray; let i = index">
                 <ng-container *ngIf="repM.RECEITA_LIQUIDA!=null">
-                <td> {{repM.MONTH}} </td>
+                <td> {{consultores.dateArray[i]}} </td>
                 <td>{{repM.RECEITA_LIQUIDA | currency:"BRL":"symbol"}}</td>
                 <td>{{repM.CUSTO_FIJO | currency:"BRL":"symbol"}}</td>
                 <td>{{repM.COMISSAO | currency:"BRL":"symbol"}}</td>
