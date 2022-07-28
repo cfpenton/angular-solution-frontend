@@ -54,7 +54,7 @@ export class AppComponent {
   arrayRL:any=[]
   logo: string = '../assets/images/agence-logo.png';
   current: any = 1;
-  current1: any;
+  current1: any = 1;
   source: string[] = [];
   target = [];
   consultoresData: any;
@@ -143,14 +143,13 @@ export class AppComponent {
   getReport() {
     if (this.current1 != 1) {
     this.current1 = 1;
-    this.getReportData();
+    this.chart?.update();
     }
   };
 
   getGrafico(){
     if (this.current1 != 2) {
     this.current1 = 2;
-    this.getReportData();
     this.chart?.update();
     }
   };
@@ -158,7 +157,6 @@ export class AppComponent {
   getPizza(){
     if (this.current1 != 3) {
       this.current1 = 3;
-      this.getReportData();
       this.chart?.update(); 
     }
   };

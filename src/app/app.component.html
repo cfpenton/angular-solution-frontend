@@ -102,10 +102,10 @@
         </li>
     </ul>
     <br>
-<div *ngIf="current1==1  && target.length >0 && reportData.length >0">
+<div *ngIf="current1==1 && reportData.length >0">
     <app-relatorio [reportData]="reportData"></app-relatorio>
 </div>
-<div *ngIf="current1==2 && target.length >0 && reportData.length >0">
+<div *ngIf="current1==2 && reportData.length >0">
     <div>
           <div style="display: block;">
             <canvas baseChart height="500"
@@ -119,7 +119,7 @@
           </div>
       </div>
 </div>
-<div *ngIf="current1==3  && target.length >0 && reportData.length >0">
+<div *ngIf="current1==3 && reportData.length >0">
         <div>
           <div class="chart">
             <canvas baseChart height="500"
