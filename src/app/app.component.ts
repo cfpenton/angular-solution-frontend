@@ -4,13 +4,14 @@ import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 
 import DataLabelsPlugin from 'chartjs-plugin-datalabels';
+import { firstValueFrom, lastValueFrom } from 'rxjs';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  
+
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
 
   public barChartOptions: ChartConfiguration['options'] = {
@@ -41,23 +42,26 @@ export class AppComponent {
   ];
 
   public pieChartData: ChartData<'pie', number[], string | string[]> = {
-    labels:  [],
+    labels: [],
     datasets: [{
       data: []
-    } ]
+    }]
   };
 
-  public barChartData: ChartData<'bar'> = {
+  public barChartData: any = {
     labels: [],
     datasets: []
   };
-  arrayRL:any=[]
+  arrayRL: any = []
+  average: number = 0;
+  aveArray: any = [];
   logo: string = '../assets/images/agence-logo.png';
   current: any = 1;
   current1: any = 1;
   source: string[] = [];
   target = [];
   consultoresData: any;
+  salariosData: any;
   currentConsultor: any;
   reportData: any = [];
   userType = 'Consultores';
@@ -86,6 +90,7 @@ export class AppComponent {
 
   ngOnInit() {
     this.getConsultores();
+    this.getSalarios();
   }
 
   setCurrent(value: any) {
@@ -99,65 +104,127 @@ export class AppComponent {
       this.userType = 'Clientes';
       this.source = [];
       this.target = [];
-      this.reportData=[];
+      this.reportData = [];
     }
   };
 
   getConsultores() {
-    this.commonService.getConsultores().subscribe(result => {
-      this.consultoresData = result;
-      for (var i in result)
-        this.source.push(result[i].no_usuario);
-
-    }, err => {
-      console.log('Erro ao obter os dados Consultores(conexion fail frontend-backend)', err);
+    this.commonService.getConsultores().subscribe({
+      next: (result) => {
+        this.consultoresData = result;
+        for (var i in result)
+          this.source.push(result[i].no_usuario);
+      },
+      error: (err) => {
+        console.log('Erro ao obter os dados Consultores(conexion fail frontend-backend)', err);
+      },
+      complete: () => { }
     });
   };
 
-  getReportData(){
-    this.reportData =[];
-    this.barChartData.datasets = [];
-    this.pieChartData.labels =[];
-    this.pieChartData.datasets = [];
-    this.arrayRL =[];
-    this.currentConsultor=[];
-    for (let index = 0; index < this.target.length; index++) {
-      this.currentConsultor = this.consultoresData.find((x:any) => x.no_usuario == this.target[index]);
-      this.commonService.getRelatorioDoConsultor(this.currentConsultor.co_usuario, this.selected1, this.selected2, this.selected3,
-        this.selected4).subscribe(result => {
+  getSalarios() {
+    this.commonService.getSalarios().subscribe({
+      next: (result) => {
+        this.salariosData = result;
+      },
+      error: (err) => {
+        console.log('Erro ao obter os Salarios(conexion fail frontend-backend)', err);
+      },
+      complete: () => { }
+    });
+  };
 
+  getAveSalario() {
+    let sum = 0;
+    let count = 0;
+    for (var i of this.salariosData) {
+      if (this.target.find((x: any) => x == i.no_usuario)) {
+        sum += i.brut_salario;
+        count++;
+      }
+    }
+    return sum / count;
+  };
+  prueba: any;
+
+  async getReportData() {
+    this.average = this.getAveSalario();
+    this.aveArray = [];
+    this.reportData = [];
+    this.barChartData.datasets = [];
+    this.pieChartData.labels = [];
+    this.pieChartData.datasets = [];
+    this.arrayRL = [];
+    this.currentConsultor = [];
+    for (let tar of this.target) {
+      this.currentConsultor = this.consultoresData.find((x: any) => x.no_usuario == tar);
+      //subscribe
+      /*       this.commonService.getRelatorioDoConsultor(this.currentConsultor.co_usuario, this.selected1, this.selected2, this.selected3,
+              this.selected4).subscribe({
+                next: (result) => {
+      
+                  if (tar == this.target[0]) {
+                    this.barChartData.labels = result.dateArray;
+                    for (let { } of this.barChartData.labels) {
+                      this.aveArray.push(this.average)
+                    }
+                  }
+      
+                  this.reportData.push(result);
+                  this.barChartData.datasets.push({ data: result.rlArray, label: result.no_consultor });
+                  this.pieChartData.labels?.push(result.no_consultor);
+                  this.arrayRL.push(result.saldo.RECEITA_LIQUIDA);
+                  this.chart?.update();
+                },
+                error: (err) => {
+                  console.log('Erro ao obter os dados Relatorio(conexion fail frontend-backend)', err);
+                },
+                complete: () => { }
+              }); */
+      //
+
+      //toPromise
+      await firstValueFrom(this.commonService.getRelatorioDoConsultor(this.currentConsultor.co_usuario, this.selected1, this.selected2, this.selected3,
+        this.selected4)).then((result) => {
+          if (tar == this.target[0]) {
+            this.barChartData.labels = result.dateArray;
+          }
           this.reportData.push(result);
-          this.barChartData.labels = result.dateArray;
-          this.barChartData.datasets.push({data:result.rlArray,label:result.no_consultor});
+          this.barChartData.datasets.push({ data: result.rlArray, label: result.no_consultor });
           this.pieChartData.labels?.push(result.no_consultor);
           this.arrayRL.push(result.saldo.RECEITA_LIQUIDA);
           this.chart?.update();
-        }, err => {
+        }).catch((err) => {
           console.log('Erro ao obter os dados Relatorio(conexion fail frontend-backend)', err);
         });
     };
-    this.pieChartData.datasets.push({data:this.arrayRL});
+    for (let { } of this.barChartData.labels) {
+      this.aveArray.push(this.average)
+    }
+    //
+    this.barChartData.datasets.push({ data: this.aveArray, label: 'Custo Fixo Medio', type: 'line' });
+    this.pieChartData.datasets.push({ data: this.arrayRL });
     this.chart?.update();
   };
 
   getReport() {
     if (this.current1 != 1) {
-    this.current1 = 1;
-    this.chart?.update();
+      this.current1 = 1;
+      this.chart?.update();
     }
   };
 
-  getGrafico(){
+  getGrafico() {
     if (this.current1 != 2) {
-    this.current1 = 2;
-    this.chart?.update();
+      this.current1 = 2;
+      this.chart?.update();
     }
   };
 
-  getPizza(){
+  getPizza() {
     if (this.current1 != 3) {
       this.current1 = 3;
-      this.chart?.update(); 
+      this.chart?.update();
     }
   };
 

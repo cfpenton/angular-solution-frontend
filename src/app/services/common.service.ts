@@ -14,6 +14,10 @@ export class CommonService {
     return this.httpClient.get(this.baseUrlEndpoint + "consultores");
   }
 
+  getSalarios(): Observable<any> {
+    return this.httpClient.get(this.baseUrlEndpoint + "salarios");
+  }
+
   getRelatorioDoConsultor(consultor: string, monthStart: string, yearStart: string, monthEnd: string, yearEnd: string): Observable<any> {
     return this.httpClient.get(this.baseUrlEndpoint + "relatorio/" + consultor +"/"+ monthStart +"/"+ yearStart +"/"+ monthEnd +"/"+ yearEnd);
   }
